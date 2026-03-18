@@ -1,1 +1,1 @@
-# Haber--bulteni
+# Haber-bulteni
