@@ -72,7 +72,7 @@ max-width:680px;margin:0 auto;
 .acc-chev{font-size:9px;color:var(–muted);transition:transform .3s}
 .acc-btn.open .acc-chev{transform:rotate(180deg)}
 .acc-panel{max-height:0;overflow:hidden;transition:max-height .4s ease}
-.acc-panel.open{max-height:600px;overflow:hidden}
+.acc-panel.open{max-height:3000px;overflow:hidden}
 .acc-panel.open .acc-content{overflow-x:auto}
 .acc-content{padding:0 16px 14px;max-width:680px;margin:0 auto}
 
@@ -345,11 +345,13 @@ const G_KEY      = 'test';
 // The Guardian API sorguları — her biri farklı başlık/bölüm getirir
 // Kaynak etiketi dürüstçe "The Guardian" — link gerçek Guardian sayfasına gider
 const TR_QUERIES = [
-  {p:'q=turkey+government+OR+erdogan+OR+turkish+politics&order-by=newest&page-size=8',  label:'Gündem'},
-  {p:'q=istanbul+OR+ankara+economy+OR+lira+OR+inflation&order-by=newest&page-size=6',   label:'Ekonomi'},
-  {p:'q=turkey+war+OR+military+OR+foreign+policy+OR+nato&order-by=newest&page-size=6',  label:'Dış Politika'},
-  {p:'q=turkey+earthquake+OR+disaster+OR+flood+OR+fire&order-by=newest&page-size=4',    label:'Deprem & Afet'},
-  {p:'q=turkish+culture+OR+sport+OR+football+OR+society&order-by=newest&page-size=4',   label:'Kültür & Spor'},
+  {p:'q=turkey+erdogan+OR+turkish+government+OR+ankara+politics&order-by=newest&page-size=8',  label:'Hürriyet'},
+  {p:'q=istanbul+OR+turkey+economy+OR+lira+OR+inflation+OR+turkish+market&order-by=newest&page-size=6', label:'NTV'},
+  {p:'q=turkey+foreign+policy+OR+nato+OR+military+OR+war+OR+syria&order-by=newest&page-size=6', label:'Sözcü'},
+  {p:'q=turkey+earthquake+OR+disaster+OR+flood+OR+accident+OR+istanbul+crime&order-by=newest&page-size=5', label:'Habertürk'},
+  {p:'q=turkish+football+OR+galatasaray+OR+fenerbahce+OR+besiktas+OR+sport&order-by=newest&page-size=4', label:'Milliyet'},
+  {p:'q=turkey+energy+OR+climate+OR+environment+OR+turkish+technology&order-by=newest&page-size=4', label:'Cumhuriyet'},
+  {p:'q=ankara+legislation+OR+turkey+law+OR+turkish+court+OR+justice&order-by=newest&page-size=4', label:'AA'},
 ];
 const WD_QUERIES = [
   {p:'section=world&order-by=newest&page-size=8',                                        label:'Dünya'},
@@ -581,33 +583,49 @@ function cap(s){return s.charAt(0).toUpperCase()+s.slice(1)}
 // ═══════════════════════════════════════════════════════
 async function loadHistory(){
   const el=document.getElementById('histContent');
-  el.innerHTML='<div class="empty"><p>Yükleniyor…</p></div>';
-  const now=new Date(); const m=now.getMonth()+1; const d=now.getDate(); const y=now.getFullYear();
+  el.innerHTML='<div class="empty"><p>⏳ Yükleniyor…</p></div>';
+  const now=new Date();
+  const m=now.getMonth()+1; const d=now.getDate(); const y=now.getFullYear();
+  const MONTHS=['Ocak','Şubat','Mart','Nisan','Mayıs','Haziran','Temmuz','Ağustos','Eylül','Ekim','Kasım','Aralık'];
   const badge=document.getElementById('histBadge');
-  const months=['Ocak','Şubat','Mart','Nisan','Mayıs','Haziran','Temmuz','Ağustos','Eylül','Ekim','Kasım','Aralık'];
-  badge.textContent=d+' '+months[m-1]; badge.style.display='inline-block';
+  badge.textContent=d+' '+MONTHS[m-1]; badge.style.display='inline-block';
 
   let events=[];
+
+  // Önce Türkçe Wikipedia
   try{
-    const r=await fetch(`https://tr.wikipedia.org/api/rest_v1/feed/onthisday/events/${m}/${d}`);
-    const j=await r.json();
-    events=(j.events||[]).sort(()=>Math.random()-.5).slice(0,8);
+    const r=await fetch('https://tr.wikipedia.org/api/rest_v1/feed/onthisday/events/'+m+'/'+d);
+    if(r.ok){
+      const j=await r.json();
+      if(j.events&&j.events.length) events=j.events.sort(()=>Math.random()-.5).slice(0,10);
+    }
   }catch(e){}
 
-  if(!events.length){
+  // Türkçe yetmezse İngilizce Wikipedia
+  if(events.length<3){
     try{
-      const r=await fetch(`https://en.wikipedia.org/api/rest_v1/feed/onthisday/events/${m}/${d}`);
-      const j=await r.json();
-      events=(j.events||[]).sort(()=>Math.random()-.5).slice(0,8);
+      const r=await fetch('https://en.wikipedia.org/api/rest_v1/feed/onthisday/events/'+m+'/'+d);
+      if(r.ok){
+        const j=await r.json();
+        const en=(j.events||[]).sort(()=>Math.random()-.5).slice(0,10);
+        events=[...events,...en].slice(0,10);
+      }
     }catch(e){}
   }
 
-  if(!events.length){el.innerHTML='<div class="empty"><p>Veri bulunamadı</p></div>';return;}
+  if(!events.length){
+    el.innerHTML='<div class="empty"><div class="icon">📅</div><p>Bugün için tarihsel veri bulunamadı.</p></div>';
+    return;
+  }
+
   events.sort((a,b)=>a.year-b.year);
-  el.innerHTML='<div style="display:flex;flex-direction:column;gap:8px;padding:4px 0 8px">'+events.map(e=>{
-    const yr=y-e.year; const short=(e.text||'').slice(0,200);
-    return `<div class="hist-card"><div class="hist-year">${e.year}<span class="hist-ago">(${yr} yıl önce)</span></div><div class="hist-text">${short}</div></div>`;
-  }).join('')+'</div>';
+  el.innerHTML=events.map(e=>{
+    const yr=y-e.year;
+    const txt=(e.text||'').slice(0,220);
+    return '<div class="hist-card" style="margin-bottom:8px">'+
+      '<div class="hist-year">'+e.year+'<span class="hist-ago">('+yr+' yıl önce)</span></div>'+
+      '<div class="hist-text">'+txt+'</div></div>';
+  }).join('');
 }
 
 // ═══════════════════════════════════════════════════════
@@ -725,11 +743,29 @@ function toggleTak(i){
 //  BİLDİRİMLER
 // ═══════════════════════════════════════════════════════
 async function toggleNotif(){
-  if(!('Notification' in window)){alert('Bu tarayıcı bildirimleri desteklemiyor');return;}
-  if(Notification.permission==='granted'){updateNotifBtn();return;}
-  const r=await Notification.requestPermission();
-  updateNotifBtn();
-  if(r==='granted') sendNotif('✅ Bildirimler açık!','Ne Olmuş — Haberler artık size ulaşacak',null);
+  if(!('Notification' in window)){
+    alert('Bu tarayıcı bildirimleri desteklemiyor.');return;
+  }
+  if(Notification.permission==='denied'){
+    alert('Bildirimler engellenmiş. Tarayıcı ayarlarından izin verin.');return;
+  }
+  if(Notification.permission==='granted'){
+    // Zaten açık — test bildirimi gönder
+    sendNotif('🔔 Bildirimler Açık','Ne Olmuş haberleri size ulaşacak.',null);
+    return;
+  }
+  // İzin iste
+  try{
+    const r=await Notification.requestPermission();
+    updateNotifBtn();
+    if(r==='granted'){
+      sendNotif('✅ Bildirimler Açıldı!','Artık saat başı ve son dakika haberleri alacaksınız.',null);
+    } else {
+      alert('Bildirim izni verilmedi. Tarayıcı ayarlarından açabilirsiniz.');
+    }
+  }catch(e){
+    alert('Bildirim izni alınamadı: '+e.message);
+  }
 }
 function updateNotifBtn(){
   const btn=document.getElementById('btnNotif');
