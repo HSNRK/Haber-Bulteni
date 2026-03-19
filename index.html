@@ -600,6 +600,9 @@ function cap(s){return s.charAt(0).toUpperCase()+s.slice(1)}
 // ═══════════════════════════════════════════════════════
 //  TARİHTE BUGÜN — Wikipedia
 // ═══════════════════════════════════════════════════════
+// Tarihte Bugün — statik yedek veri (JSON)
+const HIST_DATA = JSON.parse("{\"1/1\": [{\"y\": 45, \"t\": \"Julius Caesar tarafından oluşturulan Jülyen takvimi yürürlüğe girdi.\"}, {\"y\": 1863, \"t\": \"ABD Başkanı Lincoln Köleliği Kaldırma Bildirgesini yayımladı.\"}, {\"y\": 1958, \"t\": \"Avrupa Ekonomik Topluluğu kuruldu.\"}], \"1/15\": [{\"y\": 1759, \"t\": \"British Museum Londra'da kapılarını açtı.\"}, {\"y\": 1929, \"t\": \"Martin Luther King Jr. doğdu.\"}, {\"y\": 2001, \"t\": \"Wikipedia hizmete girdi.\"}], \"1/20\": [{\"y\": 1961, \"t\": \"John F. Kennedy ABD Başkanı olarak göreve başladı.\"}, {\"y\": 2009, \"t\": \"Barack Obama ABD'nin ilk siyahi başkanı olarak göreve başladı.\"}], \"2/4\": [{\"y\": 1789, \"t\": \"George Washington ABD'nin ilk cumhurbaşkanı seçildi.\"}, {\"y\": 1945, \"t\": \"Yalta Konferansı başladı.\"}, {\"y\": 2004, \"t\": \"Facebook kuruldu.\"}], \"2/11\": [{\"y\": 1847, \"t\": \"Thomas Edison doğdu.\"}, {\"y\": 1929, \"t\": \"Vatikan Devleti kuruldu.\"}, {\"y\": 1990, \"t\": \"Nelson Mandela 27 yıllık hapis hayatından sonra serbest bırakıldı.\"}], \"2/14\": [{\"y\": 1779, \"t\": \"Kaşif James Cook Hawaii'de hayatını kaybetti.\"}, {\"y\": 1912, \"t\": \"Arizona ABD'nin 48. eyaleti oldu.\"}], \"2/19\": [{\"y\": 1473, \"t\": \"Nikolaj Kopernik doğdu.\"}, {\"y\": 1878, \"t\": \"Thomas Edison fonograf patentini aldı.\"}, {\"y\": 1945, \"t\": \"İwo Jima Muharebesi başladı.\"}], \"3/1\": [{\"y\": 1872, \"t\": \"Yellowstone, dünyanın ilk milli parkı ilan edildi.\"}, {\"y\": 1954, \"t\": \"ABD Bikini Atolünde nükleer test gerçekleştirdi.\"}], \"3/5\": [{\"y\": 1770, \"t\": \"Boston Katliamı: İngiliz askerleri beş Amerikalıyı öldürdü.\"}, {\"y\": 1946, \"t\": \"Churchill Fulton'da Demir Perde konuşmasını yaptı.\"}], \"3/8\": [{\"y\": 1917, \"t\": \"Rusya'da Şubat Devrimi başladı.\"}, {\"y\": 1971, \"t\": \"Ali-Frazier 1 boks maçı yapıldı.\"}], \"3/9\": [{\"y\": 1451, \"t\": \"Amerigo Vespucci doğdu.\"}, {\"y\": 1862, \"t\": \"İlk zırhlı gemi savaşı yaşandı.\"}, {\"y\": 1959, \"t\": \"Barbie bebek ABD'de satışa çıktı.\"}], \"3/14\": [{\"y\": 1879, \"t\": \"Albert Einstein doğdu.\"}, {\"y\": 1883, \"t\": \"Karl Marx hayatını kaybetti.\"}], \"3/15\": [{\"y\": -44, \"t\": \"Julius Caesar suikaste kurban gitti.\"}, {\"y\": 1820, \"t\": \"Maine, ABD'nin 23. eyaleti oldu.\"}, {\"y\": 1985, \"t\": \"İlk .com alan adı tescil edildi.\"}], \"3/17\": [{\"y\": 461, \"t\": \"Aziz Patrick hayatını kaybetti; İrlanda'nın koruyucu azizi.\"}, {\"y\": 1948, \"t\": \"Batı Avrupa Birliği kuruldu.\"}], \"3/18\": [{\"y\": 1314, \"t\": \"Son Tapınak Şövalyesi Jacques de Molay yakılarak öldürüldü.\"}, {\"y\": 1871, \"t\": \"Paris Komünü ilan edildi.\"}, {\"y\": 1965, \"t\": \"Aleksei Leonov ilk uzay yürüyüşünü gerçekleştirdi.\"}], \"3/19\": [{\"y\": 1279, \"t\": \"Çin'de Song hanedanının son imparatoru savaşta öldürüldü.\"}, {\"y\": 1932, \"t\": \"Sydney Harbour Köprüsü açıldı.\"}, {\"y\": 1945, \"t\": \"Hitler'in imha emri yayımlandı.\"}, {\"y\": 2003, \"t\": \"ABD liderliğindeki koalisyon kuvvetleri Irak'a girdi.\"}], \"3/20\": [{\"y\": 1602, \"t\": \"Hollanda Doğu Hindistan Şirketi kuruldu.\"}, {\"y\": 1815, \"t\": \"Napoleon Fransa'ya döndü; Yüz Gün dönemi başladı.\"}], \"3/21\": [{\"y\": 1960, \"t\": \"Güney Afrika'da Sharpeville katliamı: 69 kişi öldürüldü.\"}, {\"y\": 1871, \"t\": \"Otto von Bismarck Almanya'nın ilk Başbakanı oldu.\"}], \"3/22\": [{\"y\": 1895, \"t\": \"Lumière Kardeşler ilk film gösterimini gerçekleştirdi.\"}, {\"y\": 1945, \"t\": \"Arap Birliği kuruldu.\"}], \"3/23\": [{\"y\": 1839, \"t\": \"OK sözcüğü ilk kez bir gazetede kullanıldı.\"}, {\"y\": 1919, \"t\": \"Mussolini İtalya'da faşist hareketi kurdu.\"}], \"3/24\": [{\"y\": 1882, \"t\": \"Robert Koch tüberküloz basilini keşfettiğini duyurdu.\"}, {\"y\": 1989, \"t\": \"Exxon Valdez petrol tankeri Alaska'da karaya oturdu.\"}], \"3/25\": [{\"y\": 1807, \"t\": \"İngiltere köle ticaretini yasakladı.\"}, {\"y\": 1957, \"t\": \"Roma Antlaşması imzalandı; AET kuruldu.\"}], \"3/29\": [{\"y\": 1848, \"t\": \"Niagara Şelaleleri dondu.\"}, {\"y\": 2017, \"t\": \"İngiltere AB'den ayrılma sürecini resmen başlattı.\"}], \"3/31\": [{\"y\": 1889, \"t\": \"Eyfel Kulesi Paris'te açıldı.\"}, {\"y\": 2004, \"t\": \"Gmail hizmete girdi.\"}], \"4/1\": [{\"y\": 1976, \"t\": \"Apple Bilgisayar şirketi kuruldu.\"}], \"4/4\": [{\"y\": 1968, \"t\": \"Martin Luther King Jr. Memphis'te suikaste kurban gitti.\"}], \"4/6\": [{\"y\": 1896, \"t\": \"Modern Olimpiyat Oyunları Atina'da başladı.\"}, {\"y\": 1917, \"t\": \"ABD Birinci Dünya Savaşı'na girdi.\"}], \"4/10\": [{\"y\": 1912, \"t\": \"Titanik Southampton'dan yola çıktı.\"}, {\"y\": 1970, \"t\": \"Paul McCartney Beatles'dan ayrıldığını duyurdu.\"}], \"4/12\": [{\"y\": 1861, \"t\": \"Amerikan İç Savaşı başladı.\"}, {\"y\": 1961, \"t\": \"Yuri Gagarin uzaya giden ilk insan oldu.\"}], \"4/14\": [{\"y\": 1865, \"t\": \"Lincoln tiyatroda vuruldu.\"}, {\"y\": 1912, \"t\": \"Titanik buzdağına çarptı.\"}], \"4/15\": [{\"y\": 1452, \"t\": \"Leonardo da Vinci doğdu.\"}, {\"y\": 1912, \"t\": \"Titanik battı.\"}], \"4/19\": [{\"y\": 1775, \"t\": \"Amerikan Bağımsızlık Savaşı başladı.\"}, {\"y\": 1943, \"t\": \"Varşova Gettosu İsyanı başladı.\"}, {\"y\": 1995, \"t\": \"Oklahoma City bombalaması: 168 kişi hayatını kaybetti.\"}], \"4/23\": [{\"y\": 1616, \"t\": \"William Shakespeare hayatını kaybetti.\"}, {\"y\": 1920, \"t\": \"Türkiye Büyük Millet Meclisi Ankara'da açıldı.\"}], \"4/26\": [{\"y\": 1937, \"t\": \"Nazi Almanyası'nın uçakları İspanya'nın Guernica şehrini bombaladı.\"}, {\"y\": 1986, \"t\": \"Çernobil nükleer felaketi yaşandı.\"}], \"5/1\": [{\"y\": 1840, \"t\": \"Dünyanın ilk posta pulu İngiltere'de kullanıma girdi.\"}, {\"y\": 1886, \"t\": \"Chicago'da 8 saatlik işgünü için genel grev ilan edildi.\"}], \"5/2\": [{\"y\": 1519, \"t\": \"Leonardo da Vinci hayatını kaybetti.\"}, {\"y\": 1945, \"t\": \"Berlin teslim oldu.\"}, {\"y\": 2011, \"t\": \"Usame bin Ladin Pakistan'da öldürüldü.\"}], \"5/6\": [{\"y\": 1937, \"t\": \"Hindenburg zeplin felaketi yaşandı.\"}, {\"y\": 1954, \"t\": \"Roger Bannister 4 dakikanın altında mil koşan ilk insan oldu.\"}], \"5/8\": [{\"y\": 1886, \"t\": \"Coca-Cola ilk kez satışa sunuldu.\"}, {\"y\": 1945, \"t\": \"Avrupa'da İkinci Dünya Savaşı sona erdi.\"}], \"5/11\": [{\"y\": 1997, \"t\": \"Deep Blue satranç bilgisayarı Kasparov'u yendi.\"}], \"5/14\": [{\"y\": 1796, \"t\": \"Edward Jenner ilk aşıyı uyguladı.\"}, {\"y\": 1948, \"t\": \"İsrail devletinin kuruluşu ilan edildi.\"}], \"5/18\": [{\"y\": 1804, \"t\": \"Napoleon Fransa İmparatoru ilan edildi.\"}, {\"y\": 1980, \"t\": \"Mount St. Helens yanardağı patladı.\"}], \"5/19\": [{\"y\": 1536, \"t\": \"İngiltere Kraliçesi Anne Boleyn idam edildi.\"}, {\"y\": 1919, \"t\": \"Atatürk Samsun'a çıktı.\"}], \"5/29\": [{\"y\": 1453, \"t\": \"Konstantinopolis Osmanlı kuvvetleri tarafından fethedildi.\"}, {\"y\": 1953, \"t\": \"Edmund Hillary ve Tenzing Norgay Everest'e ilk kez ulaştı.\"}], \"6/4\": [{\"y\": 1940, \"t\": \"Dunkirk Tahliyesi tamamlandı.\"}, {\"y\": 1989, \"t\": \"Tiananmen Meydanı katliamı yaşandı.\"}], \"6/6\": [{\"y\": 1944, \"t\": \"D-Day: Müttefik kuvvetler Normandiya'ya çıkarma yaptı.\"}, {\"y\": 1984, \"t\": \"Tetris oyunu icat edildi.\"}], \"6/15\": [{\"y\": 1215, \"t\": \"Magna Carta imzalandı.\"}], \"6/18\": [{\"y\": 1815, \"t\": \"Waterloo Muharebesi: Napoleon'un son yenilgisi.\"}, {\"y\": 1940, \"t\": \"Churchill 'En iyi saatimiz' konuşmasını yaptı.\"}], \"6/25\": [{\"y\": 1950, \"t\": \"Kore Savaşı başladı.\"}, {\"y\": 2009, \"t\": \"Michael Jackson hayatını kaybetti.\"}], \"6/28\": [{\"y\": 1914, \"t\": \"Arşidük Franz Ferdinand suikaste kurban gitti; Birinci Dünya Savaşı başladı.\"}, {\"y\": 1919, \"t\": \"Versailles Antlaşması imzalandı.\"}], \"7/4\": [{\"y\": 1776, \"t\": \"ABD Bağımsızlık Bildirgesi imzalandı.\"}, {\"y\": 1997, \"t\": \"Mars Pathfinder inişi gerçekleştirdi.\"}], \"7/14\": [{\"y\": 1789, \"t\": \"Fransız Devrimi: Bastille yıkıldı.\"}], \"7/16\": [{\"y\": 1945, \"t\": \"İlk nükleer bomba Trinity testinde patlatıldı.\"}, {\"y\": 1969, \"t\": \"Apollo 11 fırlatıldı.\"}], \"7/20\": [{\"y\": 1969, \"t\": \"Apollo 11 Ay'a indi; Armstrong Ay'a ilk adımı attı.\"}], \"8/6\": [{\"y\": 1945, \"t\": \"ABD Japonya'nın Hiroşima şehrine atom bombası attı.\"}, {\"y\": 1991, \"t\": \"World Wide Web halka açıldı.\"}], \"8/9\": [{\"y\": 1945, \"t\": \"ABD Japonya'nın Nagasaki şehrine atom bombası attı.\"}, {\"y\": 1974, \"t\": \"Nixon Watergate nedeniyle istifa etti.\"}], \"8/13\": [{\"y\": 1961, \"t\": \"Berlin Duvarı inşaatına başlandı.\"}], \"8/24\": [{\"y\": 79, \"t\": \"Vezüv Yanardağı patladı; Pompei ve Herculaneum yok oldu.\"}, {\"y\": 1995, \"t\": \"Microsoft Windows 95 piyasaya çıktı.\"}], \"8/28\": [{\"y\": 1963, \"t\": \"Martin Luther King 'Bir hayalim var' konuşmasını yaptı.\"}], \"9/1\": [{\"y\": 1939, \"t\": \"Almanya Polonya'yı işgal etti; İkinci Dünya Savaşı başladı.\"}], \"9/2\": [{\"y\": 1666, \"t\": \"Büyük Londra Yangını başladı.\"}, {\"y\": 1945, \"t\": \"İkinci Dünya Savaşı resmen sona erdi.\"}], \"9/11\": [{\"y\": 1941, \"t\": \"Pentagon inşaatına başlandı.\"}, {\"y\": 2001, \"t\": \"New York ve Washington'da terör saldırıları: 2996 kişi hayatını kaybetti.\"}], \"9/17\": [{\"y\": 1787, \"t\": \"ABD Anayasası imzalandı.\"}], \"9/18\": [{\"y\": 1851, \"t\": \"New York Times ilk sayısını yayımladı.\"}], \"10/4\": [{\"y\": 1957, \"t\": \"Sovyetler Birliği Sputnik'i fırlattı; Uzay Çağı başladı.\"}], \"10/12\": [{\"y\": 1492, \"t\": \"Kristof Kolomb Bahama Adaları'na ulaştı; Amerika'nın keşfi.\"}], \"10/14\": [{\"y\": 1066, \"t\": \"Hastings Muharebesi: Normanlar İngiltere'yi ele geçirdi.\"}, {\"y\": 1947, \"t\": \"Chuck Yeager sesin hızını ilk kez aştı.\"}], \"10/21\": [{\"y\": 1879, \"t\": \"Edison ampulü icat etti.\"}], \"10/24\": [{\"y\": 1929, \"t\": \"Büyük Buhran başladı.\"}, {\"y\": 1945, \"t\": \"Birleşmiş Milletler resmen kuruldu.\"}], \"10/29\": [{\"y\": 1923, \"t\": \"Türkiye Cumhuriyeti ilan edildi.\"}, {\"y\": 1929, \"t\": \"Büyük Buhran'ın kara günü: Borsa çöktü.\"}], \"11/9\": [{\"y\": 1918, \"t\": \"Kaiser II. Wilhelm tahtı bıraktı.\"}, {\"y\": 1938, \"t\": \"Kristallnacht: Yahudilere karşı pogrom başladı.\"}, {\"y\": 1989, \"t\": \"Berlin Duvarı yıkıldı.\"}], \"11/10\": [{\"y\": 1938, \"t\": \"Atatürk hayatını kaybetti.\"}, {\"y\": 1775, \"t\": \"ABD Deniz Piyadeleri kuruldu.\"}], \"11/11\": [{\"y\": 1918, \"t\": \"Birinci Dünya Savaşı sona erdi.\"}], \"11/22\": [{\"y\": 1963, \"t\": \"Kennedy Dallas'ta suikaste kurban gitti.\"}], \"11/24\": [{\"y\": 1859, \"t\": \"Darwin Türlerin Kökeni'ni yayımladı.\"}], \"12/1\": [{\"y\": 1955, \"t\": \"Rosa Parks otobüste yerini vermedi.\"}], \"12/7\": [{\"y\": 1941, \"t\": \"Japonya Pearl Harbor'ı bombaladı; ABD İkinci Dünya Savaşı'na girdi.\"}], \"12/10\": [{\"y\": 1948, \"t\": \"BM İnsan Hakları Evrensel Beyannamesi ilan edildi.\"}], \"12/17\": [{\"y\": 1903, \"t\": \"Wright Kardeşler ilk motorlu uçuşu gerçekleştirdi.\"}], \"12/21\": [{\"y\": 1968, \"t\": \"Apollo 8 Ay'a fırlatıldı.\"}, {\"y\": 1620, \"t\": \"Hac Babalar Plymouth Rock'a indi.\"}], \"12/25\": [{\"y\": 800, \"t\": \"Charlemagne Roma İmparatoru ilan edildi.\"}, {\"y\": 1991, \"t\": \"Sovyetler Birliği resmen sona erdi.\"}], \"12/26\": [{\"y\": 1898, \"t\": \"Curie çifti Radyumu keşfetti.\"}, {\"y\": 2004, \"t\": \"Hint Okyanusu'nda tsunami: 230.000 kişi hayatını kaybetti.\"}]}");
+
 async function loadHistory(){
   const el=document.getElementById('histContent');
   el.innerHTML='<div class="empty"><p>⏳ Yükleniyor…</p></div>';
@@ -611,38 +614,39 @@ async function loadHistory(){
 
   let events=[];
 
-  // Önce Türkçe Wikipedia
+  // 1. Türkçe Wikipedia dene
   try{
     const r=await fetch('https://tr.wikipedia.org/api/rest_v1/feed/onthisday/events/'+m+'/'+d);
-    if(r.ok){
-      const j=await r.json();
-      if(j.events&&j.events.length) events=j.events.sort(()=>Math.random()-.5).slice(0,10);
-    }
+    if(r.ok){const j=await r.json(); if(j.events&&j.events.length) events=j.events.sort(()=>Math.random()-.5).slice(0,8).map(e=>({y:e.year,t:(e.text||'').slice(0,240)}));}
   }catch(e){}
 
-  // Türkçe yetmezse İngilizce Wikipedia
-  if(events.length<3){
+  // 2. İngilizce Wikipedia dene
+  if(events.length<2){
     try{
       const r=await fetch('https://en.wikipedia.org/api/rest_v1/feed/onthisday/events/'+m+'/'+d);
-      if(r.ok){
-        const j=await r.json();
-        const en=(j.events||[]).sort(()=>Math.random()-.5).slice(0,10);
-        events=[...events,...en].slice(0,10);
-      }
+      if(r.ok){const j=await r.json(); const en=(j.events||[]).sort(()=>Math.random()-.5).slice(0,8).map(e=>({y:e.year,t:(e.text||'').slice(0,240)})); events=[...events,...en].slice(0,8);}
     }catch(e){}
   }
 
+  // 3. Statik yedek — her koşulda veri göster
+  if(events.length<2){
+    const key=m+'/'+d;
+    const fb=HIST_DATA[key]||HIST_DATA[m+'/1']||[];
+    if(fb.length) events=[...events,...fb].slice(0,8);
+  }
+
   if(!events.length){
-    el.innerHTML='<div class="empty"><div class="icon">📅</div><p>Bugün için tarihsel veri bulunamadı.</p></div>';
+    el.innerHTML='<div class="empty"><div class="icon">📅</div><p>Bugün için veri bulunamadı.</p></div>';
     return;
   }
 
-  events.sort((a,b)=>a.year-b.year);
+  events.sort((a,b)=>((typeof a.year==='number'?a.year:a.y)||0)-((typeof b.year==='number'?b.year:b.y)||0));
   el.innerHTML=events.map(e=>{
-    const yr=y-e.year;
-    const txt=(e.text||'').slice(0,220);
+    const yr_num=typeof e.year==='number'?e.year:(typeof e.y==='number'?e.y:0);
+    const txt=(e.text||e.t||'').slice(0,240);
+    const ago=yr_num>0?(y-yr_num)+' yıl önce':'';
     return '<div class="hist-card" style="margin-bottom:8px">'+
-      '<div class="hist-year">'+e.year+'<span class="hist-ago">('+yr+' yıl önce)</span></div>'+
+      '<div class="hist-year">'+yr_num+(ago?'<span class="hist-ago">('+ago+')</span>':'')+'</div>'+
       '<div class="hist-text">'+txt+'</div></div>';
   }).join('');
 }
@@ -762,44 +766,40 @@ function toggleTak(i){
 //  BİLDİRİMLER
 // ═══════════════════════════════════════════════════════
 async function toggleNotif(){
-  // Bildirim API desteği yok
-  if(!('Notification' in window)){
-    alert("Bildirimler desteklenmiyor. iPhone'da bildirim icin: Uygulamayi Ana Ekrana Ekle ve oradan ac.");
+  if(typeof Notification==='undefined'){
+    alert("Bu ortamda bildirimler calismiyor. Uygulamayi GitHub Pages'ten acin.");
     return;
   }
   if(Notification.permission==='denied'){
     alert("Bildirimler engellenmiş. Tarayici ayarlarindan izin verin.");
     return;
   }
-  // Zaten açık — test bildirimi gönder
   if(Notification.permission==='granted'){
-    sendNotif('🔔 Bildirimler Açık','Saat başı ve son dakika haberleri alacaksınız. ✅',null);
+    sendNotif('Bildirimler Acik','Saat basi ve son dakika haberleri alacaksiniz.',null);
     updateNotifBtn();
     return;
   }
-  // İzin iste (iOS PWA ana ekrandan açıldığında çalışır)
   try{
-    const perm = await new Promise((resolve)=>{
-      Notification.requestPermission().then(resolve).catch(()=>resolve('denied'));
-    });
+    const perm = await Notification.requestPermission();
     updateNotifBtn();
     if(perm==='granted'){
-      sendNotif('✅ Bildirimler Açıldı!','Artık saat başı ve son dakika haberleri alacaksınız.',null);
-    } else if(perm==='denied'){
-      alert("Bildirim izni verilmedi. iPhone ana ekrandan açmayı deneyin.");
+      sendNotif('Bildirimler Acildi','Artik haberler size ulasacak.',null);
+    } else {
+      alert("Bildirim izni verilmedi.");
     }
   }catch(e){
-    alert("Bildirim hatası: " + e.message);
+    alert("Bildirim hatasi: " + e.message);
   }
 }
 function updateNotifBtn(){
   const btn=document.getElementById('btnNotif');
-  const ok=Notification.permission==='granted';
+  if(!btn) return;
+  const ok = (typeof Notification!=="undefined") && Notification.permission==='granted';
   btn.textContent=ok?'🔔 Açık':'🔔 Bildirim';
   btn.classList.toggle('on',ok);
 }
 function sendNotif(title,body,url){
-  if(Notification.permission!=='granted') return;
+  if(typeof Notification==="undefined"||Notification.permission!=='granted') return;
   try{
     const n=new Notification(title,{body,icon:'data:image/svg+xml,<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 100 100"><rect width="100" height="100" rx="20" fill="%23c94040"/><text y="65" x="50" text-anchor="middle" font-size="55">📰</text></svg>'});
     if(url) n.onclick=()=>{window.open(url,'_blank');n.close()};
@@ -807,7 +807,7 @@ function sendNotif(title,body,url){
   }catch(e){}
 }
 function checkBreaking(items){
-  if(Notification.permission!=='granted') return;
+  if(typeof Notification==="undefined"||Notification.permission!=="granted") return;
   const fresh=30*60*1000;
   items.forEach(item=>{
     if(notified.has(item.link)) return;
@@ -841,7 +841,7 @@ if(isIOS) setTimeout(()=>document.getElementById('ios-hint').classList.add('show
 // ═══════════════════════════════════════════════════════
 //  INIT
 // ═══════════════════════════════════════════════════════
-updateNotifBtn();
+if(typeof Notification !== "undefined") updateNotifBtn();
 refreshAll();
 setInterval(refreshAll,REFRESH_MS);
 scheduleHour();
