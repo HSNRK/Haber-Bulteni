@@ -72,7 +72,8 @@ max-width:680px;margin:0 auto;
 .acc-chev{font-size:9px;color:var(–muted);transition:transform .3s}
 .acc-btn.open .acc-chev{transform:rotate(180deg)}
 .acc-panel{max-height:0;overflow:hidden;transition:max-height .4s ease}
-.acc-panel.open{max-height:400px}
+.acc-panel.open{max-height:600px;overflow:hidden}
+.acc-panel.open .acc-content{overflow-x:auto}
 .acc-content{padding:0 16px 14px;max-width:680px;margin:0 auto}
 
 /* ── TABS ── */
@@ -148,7 +149,7 @@ display:-webkit-box;-webkit-line-clamp:2;-webkit-box-orient:vertical;overflow:hi
 .skel-s{width:25%}.skel-m{width:85%}.skel-l{width:100%}.skel-xs{width:50%}
 
 /* ── TARİHTE BUGÜN ── */
-.hist-scroll{display:flex;gap:10px;overflow-x:auto;padding:4px 0 8px;scroll-snap-type:x mandatory;-webkit-overflow-scrolling:touch;scrollbar-width:none}
+.hist-scroll{display:flex;gap:10px;overflow-x:auto;padding:4px 0 12px;scroll-snap-type:x mandatory;-webkit-overflow-scrolling:touch;scrollbar-width:none;padding-bottom:8px}
 .hist-scroll::-webkit-scrollbar{display:none}
 .hist-card{
 flex:0 0 200px;scroll-snap-align:start;
@@ -603,8 +604,8 @@ async function loadHistory(){
 
   if(!events.length){el.innerHTML='<div class="empty"><p>Veri bulunamadı</p></div>';return;}
   events.sort((a,b)=>a.year-b.year);
-  el.innerHTML='<div class="hist-scroll">'+events.map(e=>{
-    const yr=y-e.year; const short=(e.text||'').slice(0,150);
+  el.innerHTML='<div style="display:flex;flex-direction:column;gap:8px;padding:4px 0 8px">'+events.map(e=>{
+    const yr=y-e.year; const short=(e.text||'').slice(0,200);
     return `<div class="hist-card"><div class="hist-year">${e.year}<span class="hist-ago">(${yr} yıl önce)</span></div><div class="hist-text">${short}</div></div>`;
   }).join('')+'</div>';
 }
